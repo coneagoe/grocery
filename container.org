@@ -1,0 +1,49 @@
+* [[https://www.sgi.com/tech/stl/Container.html][Container]]
+
+** Restriction
+   Elements必须是[[http://www.sgi.com/tech/stl/Assignable.html][assignable]]的。
+   (就是说要有public的copy constructor和assignment operator。)
+
+** Example
+#+BEGIN_SRC C++
+    #include <vector>
+
+    class Data {
+        private:
+            Data(const Data & data) { }
+    };
+
+    int main() {
+        std::vector<Data> v;
+        Data a;
+
+        v.push_back(a);
+        return 0;
+    }
+#+END_SRC
+
+    compile output:
+
+    container.cpp:33:18:   required from here
+
+    container.cpp:24:9: error: ‘Data::Data(const Data&)’ is private
+
+    现在我们把代码改成如下：
+#+BEGIN_SRC C++
+    #include <vector>
+
+    class Data {
+        private:
+            Data& operator=(const Data & data) { return * this; }
+    };
+
+    int main()
+    {
+        std::vector<Data> v;
+        Data a;
+
+        v.push_back(a);
+        return 0;
+    }
+#+END_SRC
+    编译结果相同。
