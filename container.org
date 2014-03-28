@@ -22,9 +22,10 @@
     }
 #+END_SRC
 
-#+RESULTS:
+#+BEGIN_EXAMPLE
     container.cpp:33:18:   required from here
     container.cpp:24:9: error: ‘Data::Data(const Data&)’ is private
+#+END_EXAMPLE
 
     现在我们把代码改成如下：
 #+BEGIN_SRC C++
@@ -45,6 +46,11 @@
     }
 #+END_SRC
     编译结果相同。
+
+** Ambiguity
+   Container的insert 
+   element操作插入的不是原来的object，而是原object的copy。(这是C的值传递造成的。参见vector 
+   note的例子。)
 
 ** Interface
    Container提供下列接口：
