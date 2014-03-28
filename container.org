@@ -2,7 +2,7 @@
 
 ** Restriction
    Elements必须是[[http://www.sgi.com/tech/stl/Assignable.html][assignable]]的。
-   (就是说要有public的copy constructor和assignment operator。)
+   (就是说element要有public的copy constructor和assignment operator。)
 
 ** Example
 #+BEGIN_SRC C++
@@ -22,10 +22,8 @@
     }
 #+END_SRC
 
-    compile output:
-
+#+RESULTS:
     container.cpp:33:18:   required from here
-
     container.cpp:24:9: error: ‘Data::Data(const Data&)’ is private
 
     现在我们把代码改成如下：
@@ -47,3 +45,51 @@
     }
 #+END_SRC
     编译结果相同。
+
+** Interface
+   Container提供下列接口：
+
+   begin() / end() / size() / max\_size() / empty() / swap()
+
+** Category
+   * Container可分为：
+     * [[http://www.sgi.com/tech/stl/ForwardContainer.html][Forward Container]]
+     * [[http://www.sgi.com/tech/stl/ReversibleContainer.html][Reversible Container]]
+     * [[http://www.sgi.com/tech/stl/RandomAccessContainer.html][Random Access Container]]
+
+   * 又可分为：
+     * [[http://www.sgi.com/teh/stl/Sequnce.html][Sequnce]]
+     * [[http://www.sgi.com/tech/stl/AssociativeContainer.html][Associative yontainer]]
+
+*** Forward Container
+    * Condition
+
+      Forward Container必须是
+      [[http://www.sgi.com/tech/stl/EqualityComparable.html][EqualityComparable]](operator==)
+      和[[http://www.sgi.om/tech/stl/LessThanComparable.html][LessThanComparable]]的(operator<)
+
+    * Restriction
+
+      Iterator必须是[[http://www.sgi.com/tech/stl/ForwardIterator.html][Forward Iterator]]
+
+*** Reversible Container
+    * Condition
+
+      和Forward Container的Condition一样
+
+    * Restriction
+
+      Iterator必须是[[http://www.sgi.com/tech/stl/BidirectionalIterator.html][Bidirectional Iterator]]
+
+*** Random Access Container
+    * Condition
+
+      和Reversible Container的Condition一样
+
+    * Restriction
+
+      Iterator必须是[[http://www.sgi.com/tech/stl/RandomAccessIterator.html][Random Access Iterator]]
+
+    * Operation
+
+      Random Access Container提供了operator[]

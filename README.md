@@ -1,5 +1,7 @@
 grocery
 =======
 
-# shellLog.sh
+## shellLog.sh
 A simple log module of bash
+
+## STL notes

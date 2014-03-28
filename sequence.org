@@ -1,0 +1,15 @@
+* [[http://www.sgi.com/tech/stl/Sequence.html][Sequence]]
+
+** Condition
+   Sequence必须是[[http://www.sgi.com/tech/stl/ForwardContainer.html][ForwardContainer]]和[[http://www.sgi.com/tech/stl/DefaultConstructible.html][DefaultConstructible]](default 
+   constructor)
+
+** Moduls
+
+   [[http://www.sgi.com/tech/stl/Vector.html][vector]]
+
+   [[http://www.sgi.com/tech/stl/Deque.html][deque]]
+
+   [[http://www.sgi.com/tech/stl/List.html][list]]
+
+   [[http://www.sgi.com/tech/stl/Slist.html][slist]]
