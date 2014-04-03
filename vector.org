@@ -178,6 +178,7 @@
         v.push_back(1);
         v.push_back(2);
 
+        cout << hex << &v << endl;
         cout << hex << &v[0] << endl;
 
         while(1) {}
@@ -187,14 +188,17 @@
 #+END_SRC
 
 #+BEGIN_EXAMPLE
+    0x22aaa0
     0x600010470
 #+END_EXAMPLE
 
 #+BEGIN_EXAMPLE
     cat /proc/5624/maps
 
-    600000000-60060000 rw-p 00000000 0000:00000                 [heap]
-    60006000-620000000 ===p 00060000 0000:000 0                 [heap]
+    00218000-0021A000 rw-g 001E8000 0000:0000 0                   [stack (tid 4420)]
+    0021A000-00230000 rw-p 001EA000 0000:0000 0                   [stack (tid 4420)]
+    600000000-600050000 rw-p 00000000 0000:000 0                 [heap]
+    600050000-620000000 ===p 00050000 0000:0000 0                [heap]
 #+END_EXAMPLE
 
     我们可以看到element在heap。
