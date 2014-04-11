@@ -1,10 +1,9 @@
 * [[https://www.sgi.com/tech/stl/Container.html][Container]]
 
 ** Restriction
-   Elements必须是[[http://www.sgi.com/tech/stl/Assignable.html][assignable]]的。
+    * Elements必须是[[http://www.sgi.com/tech/stl/Assignable.html][assignable]]的。
    (就是说element要有public的copy constructor和assignment operator。)
 
-** Example
 #+BEGIN_SRC C++
     #include <vector>
 
@@ -47,10 +46,89 @@
 #+END_SRC
     编译结果相同。
 
+    * Element type不能是reference。
+
+#+BEGIN_SRC C++
+    #include <vector>
+
+    using namespace std;
+
+    int main() {
+        vector<int &> v;
+        return 0;
+    }
+#+END_SRC
+
+#+BEGIN_EXAMPLE
+    vector5.cpp:24:19:   required from here
+    /usr/lib/gcc/x86_64-pc-cygwin/4.8.2/include/c++/ext/new_allocator.h:63:26: 
+    error: forming pointer to reference type ‘int&’
+           typedef _Tp*       pointer;
+                                     ^
+    /usr/lib/gcc/x86_64-pc-cygwin/4.8.2/include/c++/ext/new_allocator.h:64:26: 
+    error: formin pointer to reference type ‘int&’
+           typedef const _Tp* const_pointer;
+                                     ^
+#+END_EXAMPLE
+
+    * 不要向container中插入derived class object。[fn:1]
+
+#+BEGIN_SRC C++
+    #include <vector>
+    #include <iostream>
+
+    using namespace std;
+
+    class Base {
+        public:
+            Base():m_a(0) { cout << "Base()" << endl; }
+
+            Base(const Base & data):m_a(data.m_a) { cout << "Base(const Base & data)" << endl; }
+        private:
+            int m_a;
+    };
+
+    class Inherit : public Base {
+        public:
+            Inherit():m_b(0) { cout << "Inherit()" << endl; }
+
+            Inherit(const Inherit & data): Base(data), m_b(data.m_b) {
+                cout << "Inherit(const Inherit & data)" << endl;
+            }
+        private:
+            int m_b;
+    };
+
+    int main()
+    {
+        vector<Base> v;
+
+        Inherit a;
+
+        v.push_back(a);
+
+        return 0;
+    }
+#+END_SRC
+
+#+BEGIN_EXAMPLE
+    $ ./a.exe
+    Base()
+    Inherit()
+    Base(const Base & data)
+#+END_EXAMPLE
+
+    这肯定不是你所期望的。
+
 ** Ambiguity
    Container的insert 
-   element操作插入的不是原来的object，而是原object的copy。(这是C的值传递造成的。参见vector 
+   element操作插入的不是原来的object，而是原object的copy。[fn:1](这是C的值传递造成的。参见vector 
    note的例子。)
+
+** Resolution
+   针对上面的两个问题(slicing 
+   problem和语义问题，还有copy开销问题。参见vector)，解决办法是插入pointers，而不是object。[fn:1]
+   当然你还需要注意深拷贝/浅拷贝，需要自己维护element。
 
 ** Interface
    Container提供下列接口：
@@ -99,3 +177,5 @@
     * Operation
 
       Random Access Container提供了operator[]
+
+[fn:1] Item 3, Effective STL

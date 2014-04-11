@@ -1,0 +1,47 @@
+* [[http://www.sgi.com/tech/stl/List.html][list]]
+** Notes
+   * empty() / size() [fn:1]
+
+     语义上这两者可以达到相同的效果，但是在效率上是不同的。
+     Note: you should not assume that this function is constant time. It is 
+     permitted to be O(N), where N is the number of elements in the list. If you 
+     wish to test whether a list is empty, you should write L.empty() rather 
+     than L.size() == 0. [fn:2]
+     这和list的实现有关(单链表)。
+
+#+BEGIN_SRC C++
+    #include <time.h>
+    #include <list>
+    #include <iostream>
+
+    using namespace std;
+
+    int main() {
+        list<int> l;
+
+        for(int i; i < 100000; i++)
+            l.push_back(1);
+
+        clock_t start = clock();
+        l.size();
+        clock_t end = clock();
+        cout << end - start << endl;
+
+        start = clock();
+        l.empty();
+        end = clock();
+        cout << end - start << endl;
+
+        return 0;
+    }
+#+END_SRC
+
+#+BEGIN_EXAMPLE
+    $ ./a.exe
+    16
+    0
+#+END_EXAMPLE
+
+[fn:1] Item 4, Effective STL
+
+[fn:2] http://www.sgi.com/tech/stl/List.html
