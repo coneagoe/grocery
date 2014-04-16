@@ -1,12 +1,15 @@
+#+OPTIONS:^:{}
 * [[http://www.sgi.com/tech/stl/List.html][list]]
 ** Notes
    * empty() / size() [fn:1]
 
-     语义上这两者可以达到相同的效果，但是在效率上是不同的。
+     语义上这两者可以达到相同的效果，但是在效率上是不同的。[fn:2]
+     #+BEGIN_QUOTE
      Note: you should not assume that this function is constant time. It is 
      permitted to be O(N), where N is the number of elements in the list. If you 
      wish to test whether a list is empty, you should write L.empty() rather 
-     than L.size() == 0. [fn:2]
+     than L.size() == 0.
+     #+END_QUOTE
      这和list的实现有关(单链表)。
 
 #+BEGIN_SRC C++
@@ -42,6 +45,26 @@
     0
 #+END_EXAMPLE
 
+    其实简单地想想，一个是求size，一个是判断是否为空，最后目的还是有些微差别的。
+
+    * list修改了以后，iterator / pointer / reference还有效吗？
+
+      * splice() [fn:3]
+
+        #+BEGIN_QUOTE
+        No changes on the iterators, pointers and references related to the 
+        container before the call.
+        The iterators, pointers and references that referred to transferred 
+        elements keep referring to those same elements, but iterators now iterate 
+        into the container the elements have been transferred to.
+        #+END_QUOTE
+
+        不会修改调用之前的iterators/pointer和references。iterators，pointers和references还是会refer到transferred 
+        elements(同一个elements)，但是iterators现在指向的是elements 
+        transferred后的那个container。
+
 [fn:1] Item 4, Effective STL
 
 [fn:2] http://www.sgi.com/tech/stl/List.html
+
+[fn:3] http://www.cplusplus.com/reference/list/list/splice/

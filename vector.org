@@ -1,3 +1,4 @@
+#+OPTIONS:^:{}
 * [[http://www.sgi.com/tech/stl/Vector.html][vector]]
 ** Trap
 *** vector会调用element的copy constructor
@@ -146,11 +147,11 @@
 #+END_EXAMPLE
 
 *** 什么时候会reallocate memory？
-    * Memory will be reallocated automatically if more than capacity() - size() elements are inserted into the vector. (这包括push\_back() / insert()。)
+    * Memory will be reallocated automatically if more than capacity() - size() elements are inserted into the vector. (这包括push_back() / insert()。)
 
     * reserve() causes a reallocation manually. (resize()也有可能。)
 
-    * 除了这些就安全了吗？pop\_back() / erase() / clear()可能会造成之前的iterator / pointer无效。swap()虽然不会造成crash，但是element value真的是你想要的吗？
+    * 除了这些就安全了吗？pop_back() / erase() / clear()可能会造成之前的iterator / pointer无效。swap()虽然不会造成crash，但是element value真的是你想要的吗？
 
 *** 开销
     我们从前面的例子知道vector会调用element的copy 

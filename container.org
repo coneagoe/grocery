@@ -1,3 +1,4 @@
+#+OPTIONS:^:{}
 * [[https://www.sgi.com/tech/stl/Container.html][Container]]
 
 ** Restriction
@@ -133,7 +134,7 @@
 ** Interface
    Container提供下列接口：
 
-   begin() / end() / size() / max\_size() / empty() / swap()
+   begin() / end() / size() / max_size() / empty() / swap()
 
 ** Category
    * Container可分为：
